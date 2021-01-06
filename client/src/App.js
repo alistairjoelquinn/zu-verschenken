@@ -22,7 +22,7 @@ const AppStyles = styled.div`
 export default function App() {
     return (
         <AppStyles>
-            <div>React App / Styled Components / Node Server</div>
+            <div>Google Maps React Components</div>
         </AppStyles>
     );
 }
