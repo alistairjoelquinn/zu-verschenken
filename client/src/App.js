@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import 'normalize.css';
@@ -39,6 +39,12 @@ export default function App() {
         libraries
     });
     const [giftMarkers, setGiftMarkers] = useState([]);
+    const onMapClick = useCallback(e =>
+        setGiftMarkers(val => [...val, {
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+            time: new Date()
+        }]), []);
 
     if (loadError) {
         return 'Error loading!';
@@ -54,11 +60,7 @@ export default function App() {
                 zoom={12}
                 center={center}
                 options={options}
-                onClick={e => setGiftMarkers(val => [...val, {
-                    lat: e.latLng.lat(),
-                    lng: e.latLng.lng(),
-                    time: new Date()
-                }])}
+                onClick={onMapClick}
             >
                 {giftMarkers.map(item => (
                     <Marker
