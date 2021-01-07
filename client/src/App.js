@@ -57,7 +57,7 @@ export default function App() {
             <HeaderStyles>Zu Verschenken 🎁</HeaderStyles>
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={12}
+                zoom={13}
                 center={center}
                 options={options}
                 onClick={onMapClick}
