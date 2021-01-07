@@ -2,6 +2,8 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps
 import { formatRelative } from 'date-fns';
 
 export default function App() {
+    console.log('apiKey: ', apiKey);
+
     return (
         <div>Google Maps React Components</div>
     );

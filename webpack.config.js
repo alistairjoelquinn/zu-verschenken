@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack');
 
 module.exports = () => ({
     entry: [
@@ -32,5 +33,10 @@ module.exports = () => ({
                 use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             }
         ],
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            apiKey: JSON.stringify(require('./env.json'))
+        })
+    ]
 });
