@@ -2,11 +2,12 @@ import { useCallback, useRef, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import 'normalize.css';
+import '@reach/combobox/styles.css';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
-import '@reach/combobox/styles.css';
 
 import mapStyles from './mapStyles';
+import SearchBar from './SearchBar';
 
 const HeaderStyles = styled.h1`
     position: absolute;
@@ -16,6 +17,7 @@ const HeaderStyles = styled.h1`
     background-color: transparent;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 20px;
+    -webkit-text-stroke: 1px white;
 `;
 
 const libraries = ['places'];
@@ -59,7 +61,8 @@ export default function App() {
 
     return (
         <div>
-            <HeaderStyles>Zu Verschenken 🎁</HeaderStyles>
+            <HeaderStyles>Zu Verschenken</HeaderStyles>
+            <SearchBar />
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={13}
@@ -101,4 +104,5 @@ export default function App() {
             </GoogleMap>
         </div>
     );
-}
+};
+
