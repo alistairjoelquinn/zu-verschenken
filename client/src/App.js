@@ -2,12 +2,12 @@ import { useCallback, useRef, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import 'normalize.css';
-import '@reach/combobox/styles.css';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
 
 import mapStyles from './mapStyles';
 import SearchBar from './SearchBar';
+import Typography from './styles/Typography';
 
 const HeaderStyles = styled.h1`
     position: absolute;
@@ -61,6 +61,7 @@ export default function App() {
 
     return (
         <div>
+            <Typography />
             <HeaderStyles>Zu Verschenken</HeaderStyles>
             <SearchBar />
             <GoogleMap

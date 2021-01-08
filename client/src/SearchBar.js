@@ -1,16 +1,22 @@
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
+import '@reach/combobox/styles.css';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
 
 const SearchBarStyles = styled.div`
     position: absolute;
     top: 1rem;
-    left: 1rem;
+    left: 10rem;
     color: dimgrey;
     z-index: 2;
     margin: 0;
     padding: 0;
+    input {
+        padding: 1.5rem;
+        font-size: 1.5rem;
+        width: 100%;
+    }
 `;
 
 const SearchBar = () => {
