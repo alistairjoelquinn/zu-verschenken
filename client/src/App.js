@@ -4,8 +4,6 @@ import { formatRelative } from 'date-fns';
 import 'normalize.css';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
-import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
 
 import mapStyles from './mapStyles';
