@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import 'normalize.css';
@@ -39,19 +39,24 @@ export default function App() {
         libraries
     });
     const [giftMarkers, setGiftMarkers] = useState([]);
-    const onMapClick = useCallback(e =>
-        setGiftMarkers(val => [...val, {
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng(),
-            time: new Date()
-        }]), []);
+    const [selectedGift, setSelectedGift] = useState(null);
 
-    if (loadError) {
-        return 'Error loading!';
-    }
-    if (!isLoaded) {
-        return 'Loading Maps...';
-    }
+    const onMapClick = useCallback(
+        e =>
+            setGiftMarkers(val => [...val, {
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng(),
+                time: new Date()
+            }]),
+        []
+    );
+
+    const mapRef = useRef();
+    const onMapLoad = useCallback(map => mapRef.current = map, []);
+
+    if (loadError) return 'Error loading!';
+    if (!isLoaded) return 'Loading Maps...';
+
     return (
         <div>
             <HeaderStyles>Zu Verschenken 🎁</HeaderStyles>
@@ -61,6 +66,7 @@ export default function App() {
                 center={center}
                 options={options}
                 onClick={onMapClick}
+                onLoad={onMapLoad}
             >
                 {giftMarkers.map(item => (
                     <Marker
@@ -75,8 +81,23 @@ export default function App() {
                             origin: new window.google.maps.Point(0, 0),
                             anchor: new window.google.maps.Point(15, 15)
                         }}
+                        onClick={() => setSelectedGift(item)}
                     />
                 ))}
+                {selectedGift ? (
+                    <InfoWindow
+                        position={{
+                            lat: selectedGift.lat,
+                            lng: selectedGift.lng
+                        }}
+                        onCloseClick={() => setSelectedGift(null)}
+                    >
+                        <div>
+                            <h3>Zu Verschenken!</h3>
+                            <p>Spotted {formatRelative(selectedGift.time, new Date())}</p>
+                        </div>
+                    </InfoWindow>
+                ) : null}
             </GoogleMap>
         </div>
     );
