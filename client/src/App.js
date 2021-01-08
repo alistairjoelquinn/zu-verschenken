@@ -5,6 +5,7 @@ import Map from './Map';
 
 import SearchBar from './SearchBar';
 import Typography from './styles/Typography';
+import config from './mapConfig';
 
 const HeaderStyles = styled.h1`
     position: absolute;
@@ -17,12 +18,10 @@ const HeaderStyles = styled.h1`
     color: white;
 `;
 
-const libraries = ['places'];
-
 export default function App() {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: apiKey,
-        libraries
+        libraries: config.libraries
     });
 
     if (loadError) return 'Error loading!';
@@ -36,5 +35,5 @@ export default function App() {
             <Map />
         </div>
     );
-};
+}
 

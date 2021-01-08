@@ -40,7 +40,14 @@ const SearchBar = () => {
     return (
         <SearchContainerStyles>
             <SearchBarStyles>
-                <Combobox onSelect={(address) => { console.log('address: ', address); }}>
+                <Combobox onSelect={async (address) => {
+                    try {
+                        const response = await getGeocode({ address });
+                        console.log('response[0]: ', response[0]);
+                    } catch (err) {
+                        console.log('err: ', err);
+                    }
+                }}>
                     <ComboboxInput
                         value={value}
                         onChange={e => setValue(e.target.value)}

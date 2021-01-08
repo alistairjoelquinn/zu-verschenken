@@ -3,7 +3,7 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import { formatRelative } from 'date-fns';
 
-import mapConfig from './mapConfig';
+import config from './mapConfig';
 
 export default function Map() {
     const [giftMarkers, setGiftMarkers] = useState([]);
@@ -24,7 +24,7 @@ export default function Map() {
 
     return (
         <GoogleMap
-            {...mapConfig}
+            {...config.mainConfig}
             onClick={onMapClick}
             onLoad={onMapLoad}
         >
