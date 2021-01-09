@@ -42,7 +42,7 @@ export default function App() {
             <Typography />
             <HeaderStyles>Zu Verschenken</HeaderStyles>
             <SearchBar relocateMap={relocateMap} />
-            <BrowserPosition />
+            <BrowserPosition relocateMap={relocateMap} />
             <Map onMapLoad={onMapLoad} />
         </div>
     );

@@ -58,9 +58,13 @@ const SearchBar = ({ relocateMap }) => {
                         placeholder="Enter a location in Berlin..."
                     />
                     <ComboboxPopover>
-                        {status === 'OK' && data.map(({ place_id, description }) => (
-                            <ComboboxOption key={v4()} value={description} />
-                        ))}
+                        <ComboboxList>
+                            {status === 'OK' &&
+                                data.map(({ place_id, description }) => (
+                                    <ComboboxOption key={v4()} value={description} />
+                                ))
+                            }
+                        </ComboboxList>
                     </ComboboxPopover>
                 </Combobox>
             </SearchBarStyles>
