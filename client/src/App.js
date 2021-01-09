@@ -1,3 +1,4 @@
+import { useCallback, useRef } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import 'normalize.css';
 import styled from 'styled-components';
@@ -6,6 +7,7 @@ import Map from './Map';
 import SearchBar from './SearchBar';
 import Typography from './styles/Typography';
 import config from './mapConfig';
+import BrowserPosition from './BrowserPosition';
 
 const HeaderStyles = styled.h1`
     position: absolute;
@@ -24,6 +26,14 @@ export default function App() {
         libraries: config.libraries
     });
 
+    const mapRef = useRef();
+    const onMapLoad = useCallback(map => mapRef.current = map, []);
+
+    const relocateMap = useCallback(({ lat, lng }) => {
+        mapRef.current.panTo({ lat, lng });
+        mapRef.current.setZoom(16);
+    }, []);
+
     if (loadError) return 'Error loading!';
     if (!isLoaded) return 'Loading Maps...';
 
@@ -31,8 +41,9 @@ export default function App() {
         <div>
             <Typography />
             <HeaderStyles>Zu Verschenken</HeaderStyles>
-            <SearchBar />
-            <Map />
+            <SearchBar relocateMap={relocateMap} />
+            <BrowserPosition />
+            <Map onMapLoad={onMapLoad} />
         </div>
     );
 }

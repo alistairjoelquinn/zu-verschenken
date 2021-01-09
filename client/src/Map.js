@@ -1,11 +1,11 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import { formatRelative } from 'date-fns';
 
 import config from './mapConfig';
 
-export default function Map() {
+export default function Map({ onMapLoad }) {
     const [giftMarkers, setGiftMarkers] = useState([]);
     const [selectedGift, setSelectedGift] = useState(null);
 
@@ -18,9 +18,6 @@ export default function Map() {
             }]),
         []
     );
-
-    const mapRef = useRef();
-    const onMapLoad = useCallback(map => mapRef.current = map, []);
 
     return (
         <GoogleMap

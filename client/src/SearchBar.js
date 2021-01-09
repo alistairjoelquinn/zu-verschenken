@@ -26,7 +26,7 @@ const SearchBarStyles = styled.div`
     }
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ relocateMap }) => {
     const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
         requestOptions: {
             location: {
@@ -41,9 +41,12 @@ const SearchBar = () => {
         <SearchContainerStyles>
             <SearchBarStyles>
                 <Combobox onSelect={async (address) => {
+                    setValue(address, false);
+                    clearSuggestions();
                     try {
                         const response = await getGeocode({ address });
-                        console.log('response[0]: ', response[0]);
+                        const { lat, lng } = await getLatLng(response[0]);
+                        relocateMap({ lat, lng });
                     } catch (err) {
                         console.log('err: ', err);
                     }
