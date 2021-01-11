@@ -5,7 +5,7 @@ import { formatRelative } from 'date-fns';
 
 import config from './mapConfig';
 
-export default function Map({ onMapLoad }) {
+const Map = ({ onMapLoad }) => {
     const [giftMarkers, setGiftMarkers] = useState([]);
     const [selectedGift, setSelectedGift] = useState(null);
 
@@ -57,4 +57,6 @@ export default function Map({ onMapLoad }) {
             ) : null}
         </GoogleMap>
     );
-}
+};
+
+export default Map;

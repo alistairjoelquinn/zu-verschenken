@@ -9,6 +9,20 @@ import Typography from './styles/Typography';
 import config from './mapConfig';
 import BrowserPosition from './BrowserPosition';
 
+const MainPageStyles = styled.div`
+    background-color: tomato;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .map-container {
+        height: 50vh;
+        width: 70vw;
+        border: 2px solid black;
+    }
+`;
+
 const HeaderStyles = styled.h1`
     position: absolute;
     bottom: 1rem;
@@ -29,8 +43,8 @@ const SpinnerStyles = styled.div`
     justify-content: center;
 `;
 
-export default function App() {
-    const { isLoaded, loadError } = useLoadScript({
+const App = () => {
+    const { isLoaded } = useLoadScript({
         googleMapsApiKey: apiKey,
         libraries: config.libraries
     });
@@ -43,7 +57,6 @@ export default function App() {
         mapRef.current.setZoom(16);
     }, []);
 
-    if (loadError) return 'Error loading!';
     if (!isLoaded) {
         return (
             <SpinnerStyles>
@@ -55,11 +68,16 @@ export default function App() {
     return (
         <div>
             <Typography />
-            <HeaderStyles>Zu Verschenken</HeaderStyles>
-            <SearchBar relocateMap={relocateMap} />
-            <BrowserPosition relocateMap={relocateMap} />
-            <Map onMapLoad={assignMapToRef} />
+            <MainPageStyles>
+                <HeaderStyles>Zu Verschenken</HeaderStyles>
+                <div className="map-container">
+                    <SearchBar relocateMap={relocateMap} />
+                    <BrowserPosition relocateMap={relocateMap} />
+                    <Map onMapLoad={assignMapToRef} />
+                </div>
+            </MainPageStyles>
         </div>
     );
-}
+};
 
+export default App;

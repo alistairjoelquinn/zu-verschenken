@@ -3,8 +3,8 @@ export default {
     mainConfig: {
         zoom: 13,
         mapContainerStyle: {
-            width: '100vw',
-            height: '100vh'
+            width: '100%',
+            height: '100%'
         },
         center: {
             lat: 52.520008,

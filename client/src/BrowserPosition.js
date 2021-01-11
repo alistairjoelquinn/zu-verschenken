@@ -13,17 +13,19 @@ const BrowserPositionStyles = styled.div`
     }
 `;
 
-export default function BrowserPosition({ relocateMap }) {
+const BrowserPosition = ({ relocateMap }) => {
     return (
         <BrowserPositionStyles onClick={() => {
             navigator.geolocation.getCurrentPosition((position) => {
                 relocateMap({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
-                })
-            }, () => null);
+                });
+            });
         }}>
             <img src="/compass.png" alt="compass icon for locating browser position" />
         </BrowserPositionStyles>
     );
-}
+};
+
+export default BrowserPosition;
