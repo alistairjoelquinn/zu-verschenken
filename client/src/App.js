@@ -20,6 +20,15 @@ const HeaderStyles = styled.h1`
     color: white;
 `;
 
+const SpinnerStyles = styled.div`
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export default function App() {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: apiKey,
@@ -27,7 +36,7 @@ export default function App() {
     });
 
     const mapRef = useRef();
-    const onMapLoad = useCallback(map => mapRef.current = map, []);
+    const assignMapToRef = useCallback(map => mapRef.current = map, []);
 
     const relocateMap = useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
@@ -35,7 +44,13 @@ export default function App() {
     }, []);
 
     if (loadError) return 'Error loading!';
-    if (!isLoaded) return 'Loading Maps...';
+    if (!isLoaded) {
+        return (
+            <SpinnerStyles>
+                <img src="/spinner.gif" />
+            </SpinnerStyles>
+        );
+    }
 
     return (
         <div>
@@ -43,7 +58,7 @@ export default function App() {
             <HeaderStyles>Zu Verschenken</HeaderStyles>
             <SearchBar relocateMap={relocateMap} />
             <BrowserPosition relocateMap={relocateMap} />
-            <Map onMapLoad={onMapLoad} />
+            <Map onMapLoad={assignMapToRef} />
         </div>
     );
 }
