@@ -8,3 +8,12 @@ export const getInitialUserLocations = () => {
         });
     };
 };
+
+export const updateUserLocations = (newLocations) => {
+    return dispatch => {
+        dispatch({
+            type: "UPDATE_USER_LOCATIONS",
+            newLocations
+        });
+    };
+};

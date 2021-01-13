@@ -10,7 +10,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post('/new-location-click', (req, res) => {
-    console.log('req.body: ', req.body);
+    userInputLocations.push(req.body);
+    res.json({ userInputLocations });
 });
 
 app.get('/initial-user-locations', (req, res) => {

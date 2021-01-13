@@ -9,5 +9,11 @@ export default (state = initialState, action) => {
             userLocations: action.locations
         };
     }
+    if (action.type === "UPDATE_USER_LOCATIONS") {
+        return {
+            ...state,
+            userLocations: action.newLocations
+        };
+    }
     return state;
 };

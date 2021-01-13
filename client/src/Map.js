@@ -6,7 +6,7 @@ import { formatRelative } from 'date-fns';
 import axios from 'axios';
 
 import config from './mapConfig';
-import { getInitialUserLocations } from '../store/actions';
+import { getInitialUserLocations, updateUserLocations } from '../store/actions';
 
 const Map = ({ onMapLoad }) => {
     const dispatch = useDispatch();
@@ -24,7 +24,8 @@ const Map = ({ onMapLoad }) => {
             lng: e.latLng.lng(),
             time: new Date()
         });
-        console.log('response: ', response);
+        console.log('response from update: ', response.data.userInputLocations);
+        dispatch(updateUserLocations(response.data.userInputLocations));
     });
 
     useEffect(() => {
