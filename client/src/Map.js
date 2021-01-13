@@ -1,11 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import { formatRelative } from 'date-fns';
 
 import config from './mapConfig';
+import { getInitialUserLocations } from '../store/actions';
 
 const Map = ({ onMapLoad }) => {
+    const dispatch = useDispatch();
     const [giftMarkers, setGiftMarkers] = useState([]);
     const [selectedGift, setSelectedGift] = useState(null);
 
@@ -18,6 +21,10 @@ const Map = ({ onMapLoad }) => {
             }]),
         []
     );
+
+    useEffect(() => {
+        dispatch(getInitialUserLocations());
+    }, []);
 
     return (
         <GoogleMap
