@@ -14,17 +14,11 @@ const Map = ({ onMapLoad }) => {
     const [selectedGift, setSelectedGift] = useState(null);
 
     const onMapClick = useCallback(async (e) => {
-        console.log(JSON.stringify({
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng(),
-            time: new Date()
-        }));
         const response = await axios.post('/new-location-click', {
             lat: e.latLng.lat(),
             lng: e.latLng.lng(),
             time: new Date()
         });
-        console.log('response from update: ', response.data.userInputLocations);
         dispatch(updateUserLocations(response.data.userInputLocations));
     });
 
