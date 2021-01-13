@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import { formatRelative } from 'date-fns';
+import axios from 'axios';
 
 import config from './mapConfig';
 import { getInitialUserLocations } from '../store/actions';
@@ -10,18 +11,21 @@ import { getInitialUserLocations } from '../store/actions';
 const Map = ({ onMapLoad }) => {
     const dispatch = useDispatch();
     const giftMarkers = useSelector(state => state.userLocations);
-    // const [giftMarkers, setGiftMarkers] = useState([]);
     const [selectedGift, setSelectedGift] = useState(null);
 
-    const onMapClick = useCallback(
-        e =>
-            setGiftMarkers(val => [...val, {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date()
-            }]),
-        []
-    );
+    const onMapClick = useCallback(async (e) => {
+        console.log(JSON.stringify({
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+            time: new Date()
+        }));
+        const response = await axios.post('/new-location-click', {
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+            time: new Date()
+        });
+        console.log('response: ', response);
+    });
 
     useEffect(() => {
         dispatch(getInitialUserLocations());

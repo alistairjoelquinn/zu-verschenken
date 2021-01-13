@@ -5,7 +5,13 @@ const path = require("path");
 const userInputLocations = require('./startingLocations.json');
 
 app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+
+app.post('/new-location-click', (req, res) => {
+    console.log('req.body: ', req.body);
+});
 
 app.get('/initial-user-locations', (req, res) => {
     res.json({ userInputLocations });
