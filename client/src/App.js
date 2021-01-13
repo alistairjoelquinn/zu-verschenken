@@ -7,31 +7,31 @@ import Map from './Map';
 import SearchBar from './SearchBar';
 import Typography from './styles/Typography';
 import config from './mapConfig';
-import BrowserPosition from './BrowserPosition';
+import UserLocation from './UserLocation';
 
 const MainPageStyles = styled.div`
-    background-color: tomato;
+    background-color: rgb(215, 158, 157);
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
     .map-container {
-        height: 50vh;
-        width: 70vw;
+        height: 70vh;
+        width: 85vw;
         border: 2px solid black;
+        position: relative;
     }
 `;
 
 const HeaderStyles = styled.h1`
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem; 
     z-index: 2;
     background-color: transparent;
-    font-family: RobotoBold;
-    -webkit-text-stroke: 2px black;
-    color: white;
+    font-family: Oswald;
+    font-size: 6rem;
+    -webkit-text-stroke: 1px rgb(181, 181, 181);
+    color: black;
 `;
 
 const SpinnerStyles = styled.div`
@@ -69,10 +69,13 @@ const App = () => {
         <div>
             <Typography />
             <MainPageStyles>
-                <HeaderStyles>Zu Verschenken</HeaderStyles>
+                <HeaderStyles>
+                    Zu Verschenken
+                    <div>Tracking and finding Berlins hidden treasures...</div>
+                </HeaderStyles>
                 <div className="map-container">
                     <SearchBar relocateMap={relocateMap} />
-                    <BrowserPosition relocateMap={relocateMap} />
+                    <UserLocation relocateMap={relocateMap} />
                     <Map onMapLoad={assignMapToRef} />
                 </div>
             </MainPageStyles>

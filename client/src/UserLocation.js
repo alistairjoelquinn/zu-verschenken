@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
-const BrowserPositionStyles = styled.div`
+const UserLocationStyles = styled.div`
     position: absolute;
-    top: 1.5rem;
-    right: 1rem;
+    bottom: 1.5rem;
+    left: 1rem;
     background: none;
     z-index: 2;
     img {
-        height: 3rem;
+        height: 2rem;
         background-color: transparent;
         cursor: pointer;
     }
 `;
 
-const BrowserPosition = ({ relocateMap }) => {
+const UserLocation = ({ relocateMap }) => {
     return (
-        <BrowserPositionStyles onClick={() => {
+        <UserLocationStyles onClick={() => {
             navigator.geolocation.getCurrentPosition((position) => {
                 relocateMap({
                     lat: position.coords.latitude,
@@ -24,8 +24,8 @@ const BrowserPosition = ({ relocateMap }) => {
             });
         }}>
             <img src="/compass.png" alt="compass icon for locating browser position" />
-        </BrowserPositionStyles>
+        </UserLocationStyles>
     );
 };
 
-export default BrowserPosition;
+export default UserLocation;

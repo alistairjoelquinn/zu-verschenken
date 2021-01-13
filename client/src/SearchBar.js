@@ -12,16 +12,18 @@ const SearchContainerStyles = styled.div`
 `;
 
 const SearchBarStyles = styled.div` 
-    width: 60vw;
+    width: 60%;
     position: absolute;
     top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
     color: dimgrey;
     z-index: 2;
     input {
-        padding: 1rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        font-size: 1.5rem;
+        padding: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        font-size: 1rem;
         width: 100%;
     }
 `;
