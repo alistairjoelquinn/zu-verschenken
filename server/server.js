@@ -8,7 +8,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get('/initial-user-locations', (req, res) => {
-    res.json({ locationData: userInputLocations });
+    res.json({ userInputLocations });
 });
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "..", "client", "index.html")));

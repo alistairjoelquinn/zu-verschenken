@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import { formatRelative } from 'date-fns';
@@ -9,7 +9,8 @@ import { getInitialUserLocations } from '../store/actions';
 
 const Map = ({ onMapLoad }) => {
     const dispatch = useDispatch();
-    const [giftMarkers, setGiftMarkers] = useState([]);
+    const giftMarkers = useSelector(state => state.userLocations);
+    // const [giftMarkers, setGiftMarkers] = useState([]);
     const [selectedGift, setSelectedGift] = useState(null);
 
     const onMapClick = useCallback(
@@ -32,7 +33,7 @@ const Map = ({ onMapLoad }) => {
             onClick={onMapClick}
             onLoad={onMapLoad}
         >
-            {giftMarkers.map(item => (
+            {giftMarkers && giftMarkers.map(item => (
                 <Marker
                     key={v4()}
                     position={{
@@ -45,7 +46,10 @@ const Map = ({ onMapLoad }) => {
                         origin: new window.google.maps.Point(0, 0),
                         anchor: new window.google.maps.Point(15, 15)
                     }}
-                    onClick={() => setSelectedGift(item)}
+                    onClick={() => {
+                        console.log('item: ', item);
+                        setSelectedGift(item);
+                    }}
                 />
             ))}
             {selectedGift ? (
@@ -58,7 +62,7 @@ const Map = ({ onMapLoad }) => {
                 >
                     <div>
                         <h3>Zu Verschenken!</h3>
-                        <p>Spotted {formatRelative(selectedGift.time, new Date())}</p>
+                        <p>Spotted {formatRelative(new Date(selectedGift.time), new Date())}</p>
                     </div>
                 </InfoWindow>
             ) : null}
