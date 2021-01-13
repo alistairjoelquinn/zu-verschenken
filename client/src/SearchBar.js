@@ -25,6 +25,9 @@ const SearchBarStyles = styled.div`
         padding-right: 1rem;
         font-size: 1rem;
         width: 100%;
+        &:focus {
+            outline: none;
+        }
     }
 `;
 
