@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, Marker, InfoWindow, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { v4 } from 'uuid';
 import axios from 'axios';
 
@@ -13,6 +13,11 @@ const Map = ({ onMapLoad }) => {
     const giftMarkers = useSelector(state => state.userLocations);
     const [selectedGift, setSelectedGift] = useState(null);
 
+    const [directionsRequested, setDirectionsRequested] = useState(false);
+    const [userCurrentLocation, setUserCurrentLocation] = useState(null);
+    const [userCurrentDestination, setUserCurrentDestination] = useState(null);
+
+
     const onMapClick = useCallback(async (e) => {
         const response = await axios.post('/new-location-click', {
             lat: e.latLng.lat(),
@@ -20,6 +25,22 @@ const Map = ({ onMapLoad }) => {
             time: new Date()
         });
         dispatch(updateUserLocations(response.data.userInputLocations));
+    });
+
+    const getDirections = useCallback((lat, lng) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setUserCurrentLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            });
+            setUserCurrentDestination({
+                lat, lng
+            });
+            // setDirectionsRequested(true);
+        });
+        setTimeout(() => {
+            console.log('location & destination: ', userCurrentLocation, userCurrentDestination);
+        }, 1000);
     });
 
     useEffect(() => {
@@ -32,6 +53,8 @@ const Map = ({ onMapLoad }) => {
             onClick={onMapClick}
             onLoad={onMapLoad}
         >
+            {directionsRequested && <DirectionsService />}
+            {directionsRequested && <DirectionsRenderer />}
             {giftMarkers && giftMarkers.map(item => (
                 <Marker
                     key={v4()}
@@ -58,7 +81,10 @@ const Map = ({ onMapLoad }) => {
                     }}
                     onCloseClick={() => setSelectedGift(null)}
                 >
-                    <ItemInfo selectedGift={selectedGift} />
+                    <ItemInfo
+                        selectedGift={selectedGift}
+                        getDirections={getDirections}
+                    />
                 </InfoWindow>
             )}
         </GoogleMap>
