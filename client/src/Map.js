@@ -16,6 +16,7 @@ const Map = ({ onMapLoad }) => {
     const [directionsRequested, setDirectionsRequested] = useState(false);
     const [userCurrentLocation, setUserCurrentLocation] = useState(null);
     const [userCurrentDestination, setUserCurrentDestination] = useState(null);
+    const [directionsResponse, setDirectionsResponse] = useState(null);
 
 
     const onMapClick = useCallback(async (e) => {
@@ -36,11 +37,22 @@ const Map = ({ onMapLoad }) => {
             setUserCurrentDestination({
                 lat, lng
             });
-            // setDirectionsRequested(true);
+            setDirectionsRequested(true);
         });
         setTimeout(() => {
             console.log('location & destination: ', userCurrentLocation, userCurrentDestination);
         }, 1000);
+    });
+
+    const directionsCallback = useCallback((response) => {
+        console.log('reponse from directions callback 1', response);
+        if (response !== null) {
+            if (response.status === 'OK') {
+                setDirectionsResponse(response);
+            } else {
+                console.log('reponse from directions callback 2', response);
+            }
+        }
     });
 
     useEffect(() => {
@@ -53,8 +65,19 @@ const Map = ({ onMapLoad }) => {
             onClick={onMapClick}
             onLoad={onMapLoad}
         >
-            {directionsRequested && <DirectionsService />}
-            {directionsRequested && <DirectionsRenderer />}
+            {directionsRequested && <DirectionsService
+                options={{
+                    destination: userCurrentDestination,
+                    origin: userCurrentLocation,
+                    travelMode: 'WALKING',
+                }}
+                callback={directionsCallback}
+            />}
+            {directionsResponse && <DirectionsRenderer
+                options={{
+                    directions: directionsResponse,
+                }}
+            />}
             {giftMarkers && giftMarkers.map(item => (
                 <Marker
                     key={v4()}
