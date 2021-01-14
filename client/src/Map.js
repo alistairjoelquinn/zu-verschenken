@@ -7,6 +7,7 @@ import axios from 'axios';
 import config from './mapConfig';
 import { getInitialUserLocations, updateUserLocations } from '../store/actions';
 import ItemInfo from './ItemInfo';
+import MapReset from './MapReset';
 
 const Map = ({ onMapLoad }) => {
     const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const Map = ({ onMapLoad }) => {
                     directions: directionsResponse,
                 }}
             />}
+            {directionsResponse && <MapReset />}
             {giftMarkers && giftMarkers.map(item => (
                 <Marker
                     key={v4()}
