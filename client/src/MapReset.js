@@ -25,6 +25,10 @@ const MapReset = (props) => {
         props.setUserCurrentLocation('');
         props.setUserCurrentDestination('');
         props.setDirectionsResponse(null);
+        props.relocateMap({
+            lat: 52.520008,
+            lng: 13.404954
+        }, 13);
     };
 
     return (
