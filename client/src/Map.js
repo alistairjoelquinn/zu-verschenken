@@ -14,18 +14,21 @@ const Map = ({ onMapLoad }) => {
     const [selectedGift, setSelectedGift] = useState(null);
 
     const [directionsRequested, setDirectionsRequested] = useState(false);
-    const [userCurrentLocation, setUserCurrentLocation] = useState(null);
-    const [userCurrentDestination, setUserCurrentDestination] = useState(null);
+    const [userCurrentLocation, setUserCurrentLocation] = useState('');
+    const [userCurrentDestination, setUserCurrentDestination] = useState('');
     const [directionsResponse, setDirectionsResponse] = useState(null);
 
-
     const onMapClick = useCallback(async (e) => {
-        const response = await axios.post('/new-location-click', {
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng(),
-            time: new Date()
-        });
-        dispatch(updateUserLocations(response.data.userInputLocations));
+        try {
+            const response = await axios.post('/new-location-click', {
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng(),
+                time: new Date()
+            });
+            dispatch(updateUserLocations(response.data.userInputLocations));
+        } catch (err) {
+            console.log('err: ', err);
+        }
     });
 
     const getDirections = useCallback((lat, lng) => {
@@ -38,22 +41,21 @@ const Map = ({ onMapLoad }) => {
                 lat, lng
             });
             setDirectionsRequested(true);
+            setSelectedGift(null);
         });
-        setTimeout(() => {
-            console.log('location & destination: ', userCurrentLocation, userCurrentDestination);
-        }, 1000);
-    });
+    }, []);
 
     const directionsCallback = useCallback((response) => {
-        console.log('reponse from directions callback 1', response);
         if (response !== null) {
             if (response.status === 'OK') {
+                console.log('response status OK: ', response);
                 setDirectionsResponse(response);
+                setDirectionsRequested(false);
             } else {
-                console.log('reponse from directions callback 2', response);
+                console.log('reponse status NOT OK', response);
             }
         }
-    });
+    }, []);
 
     useEffect(() => {
         dispatch(getInitialUserLocations());
@@ -69,7 +71,7 @@ const Map = ({ onMapLoad }) => {
                 options={{
                     destination: userCurrentDestination,
                     origin: userCurrentLocation,
-                    travelMode: 'WALKING',
+                    travelMode: 'TRANSIT',
                 }}
                 callback={directionsCallback}
             />}
