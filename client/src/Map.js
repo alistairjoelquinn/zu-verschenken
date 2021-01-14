@@ -2,11 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { v4 } from 'uuid';
-import { formatRelative } from 'date-fns';
 import axios from 'axios';
 
 import config from './mapConfig';
 import { getInitialUserLocations, updateUserLocations } from '../store/actions';
+import ItemInfo from './ItemInfo';
 
 const Map = ({ onMapLoad }) => {
     const dispatch = useDispatch();
@@ -46,12 +46,11 @@ const Map = ({ onMapLoad }) => {
                         anchor: new window.google.maps.Point(15, 15)
                     }}
                     onClick={() => {
-                        console.log('item: ', item);
                         setSelectedGift(item);
                     }}
                 />
             ))}
-            {selectedGift ? (
+            {selectedGift && (
                 <InfoWindow
                     position={{
                         lat: selectedGift.lat,
@@ -59,12 +58,9 @@ const Map = ({ onMapLoad }) => {
                     }}
                     onCloseClick={() => setSelectedGift(null)}
                 >
-                    <div>
-                        <h3>Zu Verschenken!</h3>
-                        <p>Spotted {formatRelative(new Date(selectedGift.time), new Date())}</p>
-                    </div>
+                    <ItemInfo selectedGift={selectedGift} />
                 </InfoWindow>
-            ) : null}
+            )}
         </GoogleMap>
     );
 };
