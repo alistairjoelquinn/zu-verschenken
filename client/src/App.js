@@ -15,10 +15,10 @@ const MainPageStyles = styled.div`
     height: 100vh;
     width: 100vw;
     display: flex;
-    padding-bottom: 10vh;
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
+    overflow: hidden;
     .map-container {
         height: 70vh;
         width: 85vw;
@@ -46,9 +46,9 @@ const App = () => {
     const mapRef = useRef();
     const assignMapToRef = useCallback(map => mapRef.current = map, []);
 
-    const relocateMap = useCallback(({ lat, lng }) => {
+    const relocateMap = useCallback(({ lat, lng }, zoom = 16) => {
         mapRef.current.panTo({ lat, lng });
-        mapRef.current.setZoom(16);
+        mapRef.current.setZoom(zoom);
     }, []);
 
     if (!isLoaded) {
@@ -67,7 +67,10 @@ const App = () => {
                 <div className="map-container">
                     <SearchBar relocateMap={relocateMap} />
                     <UserLocation relocateMap={relocateMap} />
-                    <Map onMapLoad={assignMapToRef} />
+                    <Map
+                        onMapLoad={assignMapToRef}
+                        relocateMap={relocateMap}
+                    />
                 </div>
             </MainPageStyles>
         </div>

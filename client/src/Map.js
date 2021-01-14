@@ -81,7 +81,14 @@ const Map = ({ onMapLoad }) => {
                     directions: directionsResponse,
                 }}
             />}
-            {directionsResponse && <MapReset />}
+            {directionsResponse &&
+                <MapReset
+                    setDirectionsRequested={setDirectionsRequested}
+                    setUserCurrentLocation={setUserCurrentLocation}
+                    setUserCurrentDestination={setUserCurrentDestination}
+                    setDirectionsResponse={setDirectionsResponse}
+                />
+            }
             {giftMarkers && giftMarkers.map(item => (
                 <Marker
                     key={v4()}
