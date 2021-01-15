@@ -9,7 +9,7 @@ import { getInitialUserLocations, updateUserLocations } from '../store/actions';
 import ItemInfo from './ItemInfo';
 import MapReset from './MapReset';
 
-const Map = ({ onMapLoad, relocateMap }) => {
+const Map = ({ onMapLoad, relocateMap, setClearSearchBar }) => {
     const dispatch = useDispatch();
     const giftMarkers = useSelector(state => state.userLocations);
     const [selectedGift, setSelectedGift] = useState(null);
@@ -88,6 +88,7 @@ const Map = ({ onMapLoad, relocateMap }) => {
                     setUserCurrentDestination={setUserCurrentDestination}
                     setDirectionsResponse={setDirectionsResponse}
                     relocateMap={relocateMap}
+                    setClearSearchBar={setClearSearchBar}
                 />
             }
             {giftMarkers && giftMarkers.map(item => (

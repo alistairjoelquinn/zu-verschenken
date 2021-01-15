@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import 'normalize.css';
 import styled from 'styled-components';
@@ -38,6 +38,8 @@ const SpinnerStyles = styled.div`
 `;
 
 const App = () => {
+    const [clearSearchBar, setClearSearchBar] = useState(false);
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: apiKey,
         libraries: config.libraries
@@ -65,11 +67,16 @@ const App = () => {
             <MainPageStyles>
                 <Header />
                 <div className="map-container">
-                    <SearchBar relocateMap={relocateMap} />
+                    <SearchBar
+                        relocateMap={relocateMap}
+                        clearSearchBar={clearSearchBar}
+                        setClearSearchBar={setClearSearchBar}
+                    />
                     <UserLocation relocateMap={relocateMap} />
                     <Map
                         onMapLoad={assignMapToRef}
                         relocateMap={relocateMap}
+                        setClearSearchBar={setClearSearchBar}
                     />
                 </div>
             </MainPageStyles>

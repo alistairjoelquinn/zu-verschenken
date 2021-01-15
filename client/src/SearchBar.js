@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
@@ -31,7 +32,7 @@ const SearchBarStyles = styled.div`
     }
 `;
 
-const SearchBar = ({ relocateMap }) => {
+const SearchBar = ({ relocateMap, clearSearchBar, setClearSearchBar }) => {
     const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
         requestOptions: {
             location: {
@@ -41,6 +42,13 @@ const SearchBar = ({ relocateMap }) => {
             radius: 20 * 1000
         }
     });
+
+    useEffect(() => {
+        if (clearSearchBar) {
+            setValue('');
+            setClearSearchBar(false);
+        }
+    }, [clearSearchBar, setClearSearchBar]);
 
     return (
         <SearchContainerStyles>
