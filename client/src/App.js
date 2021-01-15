@@ -82,7 +82,7 @@ const App = () => {
                         setShowModal={setShowModal}
                     />
                 </div>
-                {showModal && <UserInputModal />}
+                {showModal && <UserInputModal setShowModal={setShowModal} />}
             </MainPageStyles>
         </div>
     );

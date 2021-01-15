@@ -11,12 +11,17 @@ const UserInputStyles = styled.div`
     color: black;
     border: 3px solid black;
     border-radius: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 
-const UserInputModal = () => {
+const UserInputModal = ({ setShowModal }) => {
     return (
         <UserInputStyles>
             User Input Modal
+            <button onClick={() => setShowModal(false)}>Done!</button>
         </UserInputStyles>
     );
 };
