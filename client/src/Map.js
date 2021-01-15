@@ -9,7 +9,7 @@ import { getInitialUserLocations, updateUserLocations } from '../store/actions';
 import ItemInfo from './ItemInfo';
 import MapReset from './MapReset';
 
-const Map = ({ onMapLoad, relocateMap, setClearSearchBar }) => {
+const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal }) => {
     const dispatch = useDispatch();
     const giftMarkers = useSelector(state => state.userLocations);
     const [selectedGift, setSelectedGift] = useState(null);
@@ -20,6 +20,7 @@ const Map = ({ onMapLoad, relocateMap, setClearSearchBar }) => {
     const [directionsResponse, setDirectionsResponse] = useState(null);
 
     const onMapClick = useCallback(async (e) => {
+        setShowModal(true);
         try {
             const response = await axios.post('/new-location-click', {
                 lat: e.latLng.lat(),

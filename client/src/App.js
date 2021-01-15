@@ -9,6 +9,7 @@ import Typography from './styles/Typography';
 import config from './mapConfig';
 import UserLocation from './UserLocation';
 import Header from './Header';
+import UserInputModal from './UserInputModal';
 
 const MainPageStyles = styled.div`
     background-color: rgb(215, 158, 157);
@@ -39,6 +40,7 @@ const SpinnerStyles = styled.div`
 
 const App = () => {
     const [clearSearchBar, setClearSearchBar] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: apiKey,
@@ -77,8 +79,10 @@ const App = () => {
                         onMapLoad={assignMapToRef}
                         relocateMap={relocateMap}
                         setClearSearchBar={setClearSearchBar}
+                        setShowModal={setShowModal}
                     />
                 </div>
+                {showModal && <UserInputModal />}
             </MainPageStyles>
         </div>
     );
