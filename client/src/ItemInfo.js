@@ -2,9 +2,12 @@ import { formatRelative } from 'date-fns';
 import styled from 'styled-components';
 
 const ItemInfoStyles = styled.div`
+    width: 20vw;
     img {
         display: block;
-        max-width: 10vh;
+        width: 100%;
+        height: 60%;
+        object-fit: cover;
     }
 `;
 

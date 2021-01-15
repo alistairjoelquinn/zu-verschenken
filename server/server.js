@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const userInputLocations = require('./startingLocations.json');
+
+const { getInitialLocations } = require('./database/queries');
 
 app.use(compression());
 app.use(express.json());
@@ -14,8 +15,9 @@ app.post('/new-location-click', (req, res) => {
     res.json({ userInputLocations });
 });
 
-app.get('/initial-user-locations', (req, res) => {
-    res.json({ userInputLocations });
+app.get('/initial-user-locations', async (req, res) => {
+    const { rows } = await getInitialLocations();
+    res.json(rows);
 });
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "..", "client", "index.html")));
