@@ -2,26 +2,36 @@
     {
         "lat": 52.52427079189362,
         "lng": 13.390191121582031,
-        "time": "2021-01-13T14:19:40.235Z"
+        "time": "2021-01-13T14:19:40.235Z",
+        "url": "https://wawwd.files.wordpress.com/2010/06/buecher-zu-verschenken.jpg",
+        "contents": "books"
     },
     {
         "lat": 52.5034816923942,
         "lng": 13.395340962890625,
-        "time": "2021-01-13T14:19:40.235Z"
+        "time": "2021-01-13T14:19:40.235Z",
+        "url": "https://live.staticflickr.com/65535/50119056252_44d2ce00bb_n.jpg",
+        "contents": "Router"
     },
     {
         "lat": 52.51654132063012,
         "lng": 13.41817192602539,
-        "time": "2021-01-13T14:19:40.235Z"
+        "time": "2021-01-13T14:19:40.235Z",
+        "url": "https://www.wuerzburgerleben.de/wp-content/uploads/sites/10/2018/08/Zu-verschenken-Box-1067x800.jpg",
+        "contents": "Records, Glass"
     },
     {
         "lat": 52.53596686448022,
         "lng": 13.405297322753906,
-        "time": "2021-01-13T14:19:40.235Z"
+        "time": "2021-01-13T14:19:40.235Z",
+        "url": "https://i.pinimg.com/originals/2a/25/17/2a251794853ba0eb6a05627e57492c16.jpg",
+        "contents": "Snacks / Sweets"
     },
     {
         "lat": 52.51852604436356,
         "lng": 13.458684010986328,
-        "time": "2021-01-13T14:19:40.235Z"
+        "time": "2021-01-13T14:19:40.235Z",
+        "url": "https://www.gratiszuverschenken.ch/images/com_adsmanager/contents/box-line-6-zu-verschenken_6526_1.jpg",
+        "contents": "Guitar Amp, Bongo drum"
     }
 ]
