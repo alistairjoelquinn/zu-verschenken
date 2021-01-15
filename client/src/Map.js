@@ -96,8 +96,8 @@ const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal }) => {
                 <Marker
                     key={v4()}
                     position={{
-                        lat: item.lat,
-                        lng: item.lng
+                        lat: parseFloat(item.lat),
+                        lng: parseFloat(item.lng)
                     }}
                     icon={{
                         url: '/gift.png',

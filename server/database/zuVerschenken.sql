@@ -1,7 +1,9 @@
+DROP TABLE IF EXISTS locations;
+
 CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
-    lat DECIMAL,
-    lng DECIMAL,
+    lat NUMERIC(18, 16),
+    lng NUMERIC(18, 16),
     date VARCHAR(255),
     url VARCHAR(500),
     contents VARCHAR(255)
