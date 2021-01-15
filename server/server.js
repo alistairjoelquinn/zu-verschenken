@@ -16,8 +16,12 @@ app.post('/new-location-click', (req, res) => {
 });
 
 app.get('/initial-user-locations', async (req, res) => {
-    const { rows } = await getInitialLocations();
-    res.json(rows);
+    try {
+        const { rows } = await getInitialLocations();
+        res.json(rows);
+    } catch (err) {
+        console.log('err fetching initial locations: ', err);
+    }
 });
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "..", "client", "index.html")));
