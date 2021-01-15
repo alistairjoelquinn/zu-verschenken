@@ -15,10 +15,10 @@ const ItemInfo = ({ selectedGift, getDirections }) => {
     return (
         <ItemInfoStyles>
             <h3>Zu Verschenken!</h3>
-            <p>Seen {formatRelative(new Date(selectedGift.time), new Date())}</p>
+            <p>Seen {formatRelative(new Date(selectedGift.date), new Date())}</p>
             <p>Contains: {selectedGift.contents}</p>
             <img src={selectedGift.url} alt={selectedGift.contents} />
-            <button onClick={() => getDirections(selectedGift.lat, selectedGift.lng)}>
+            <button onClick={() => getDirections(parseFloat(selectedGift.lat), parseFloat(selectedGift.lng))}>
                 Directions
             </button>
         </ItemInfoStyles>

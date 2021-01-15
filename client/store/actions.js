@@ -2,7 +2,6 @@ export const getInitialUserLocations = () => {
     return async dispatch => {
         const response = await fetch('/initial-user-locations');
         const userInputLocations = await response.json();
-        console.log('userInputLocations: ', userInputLocations);
         dispatch({
             type: "GET_INITIAL_USER_LOCATIONS",
             locations: userInputLocations

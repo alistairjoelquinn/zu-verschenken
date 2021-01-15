@@ -113,8 +113,8 @@ const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal }) => {
             {selectedGift && (
                 <InfoWindow
                     position={{
-                        lat: selectedGift.lat,
-                        lng: selectedGift.lng
+                        lat: parseFloat(selectedGift.lat),
+                        lng: parseFloat(selectedGift.lng)
                     }}
                     onCloseClick={() => setSelectedGift(null)}
                 >
