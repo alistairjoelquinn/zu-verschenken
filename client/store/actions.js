@@ -9,11 +9,11 @@ export const getInitialUserLocations = () => {
     };
 };
 
-export const updateUserLocations = (newLocations) => {
+export const updateUserLocations = (newLocation) => {
     return dispatch => {
         dispatch({
             type: "UPDATE_USER_LOCATIONS",
-            newLocations
+            newLocation
         });
     };
 };

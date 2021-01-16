@@ -1,4 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { useLoadScript } from '@react-google-maps/api';
 import 'normalize.css';
 import styled from 'styled-components';
@@ -10,6 +12,7 @@ import config from './mapConfig';
 import UserLocation from './UserLocation';
 import Header from './Header';
 import UserInputModal from './UserInputModal';
+import { updateUserLocations } from '../store/actions';
 
 const MainPageStyles = styled.div`
     background-color: rgb(215, 158, 157);
@@ -39,13 +42,30 @@ const SpinnerStyles = styled.div`
 `;
 
 const App = () => {
+    const dispatch = useDispatch();
     const [clearSearchBar, setClearSearchBar] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const [file, setFile] = useState(null);
+    const [userTextInput, setUserTextInput] = useState('');
+    const [userCoords, setUserCoords] = useState(null);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: apiKey,
         libraries: config.libraries
     });
+
+    const submitNewLocationToServer = useCallback(async () => {
+        try {
+            const response = await axios.post('/new-location-click', {
+                file, userTextInput, ...userCoords
+            });
+            console.log('response after submitting new location: ', response);
+            // dispatch(updateUserLocations(response));
+        } catch (err) {
+            console.log('err: ', err);
+        }
+    }, []);
 
     const mapRef = useRef();
     const assignMapToRef = useCallback(map => mapRef.current = map, []);
@@ -80,9 +100,17 @@ const App = () => {
                         relocateMap={relocateMap}
                         setClearSearchBar={setClearSearchBar}
                         setShowModal={setShowModal}
+                        setUserCoords={setUserCoords}
                     />
                 </div>
-                {showModal && <UserInputModal setShowModal={setShowModal} />}
+                {showModal &&
+                    <UserInputModal
+                        setShowModal={setShowModal}
+                        setFile={setFile}
+                        setUserTextInput={setUserTextInput}
+                        submitNewLocationToServer={submitNewLocationToServer}
+                    />
+                }
             </MainPageStyles>
         </div>
     );

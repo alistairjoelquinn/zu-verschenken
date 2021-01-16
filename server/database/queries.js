@@ -6,3 +6,12 @@ module.exports.getInitialLocations = () => {
         `SELECT * FROM locations`
     );
 };
+
+module.exports.insertNewLocation = (lat, lng, date, url, contents) => {
+    return db.query(
+        `INSERT INTO locations (lat, lng, date, url, contents) 
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *`,
+        [lat, lng, date, url, contents]
+    );
+};

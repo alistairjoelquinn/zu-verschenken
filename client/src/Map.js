@@ -2,14 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, Marker, InfoWindow, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { v4 } from 'uuid';
-import axios from 'axios';
 
 import config from './mapConfig';
-import { getInitialUserLocations, updateUserLocations } from '../store/actions';
+import { getInitialUserLocations } from '../store/actions';
 import ItemInfo from './ItemInfo';
 import MapReset from './MapReset';
 
-const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal }) => {
+const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal, setUserCoords }) => {
     const dispatch = useDispatch();
     const giftMarkers = useSelector(state => state.userLocations);
     const [selectedGift, setSelectedGift] = useState(null);
@@ -19,18 +18,13 @@ const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal }) => {
     const [userCurrentDestination, setUserCurrentDestination] = useState('');
     const [directionsResponse, setDirectionsResponse] = useState(null);
 
-    const onMapClick = useCallback(async (e) => {
+    const onMapClick = useCallback((e) => {
         setShowModal(true);
-        try {
-            const response = await axios.post('/new-location-click', {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date()
-            });
-            dispatch(updateUserLocations(response.data.userInputLocations));
-        } catch (err) {
-            console.log('err: ', err);
-        }
+        setUserCoords({
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+            time: new Date()
+        });
     });
 
     const getDirections = useCallback((lat, lng) => {

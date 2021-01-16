@@ -14,14 +14,47 @@ const UserInputStyles = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    p {
+        margin: 0;
+    }
+    input[name="contents"] {
+        width: 60%;
+    }
+    input[type='file'] {
+        color: transparent;
+        width: 6rem;
+    }
+    #drop {
+        height: 40%;
+        width: 70%;
+        border: 5px dashed black;
+        border-radius: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
 `;
 
-const UserInputModal = ({ setShowModal }) => {
+const UserInputModal = ({ setShowModal, setFile, setUserTextInput, submitNewLocationToServer }) => {
+    const userSubmitHandler = () => {
+        setShowModal(false);
+        submitNewLocationToServer();
+    };
+
     return (
         <UserInputStyles>
-            User Input Modal
-            <button onClick={() => setShowModal(false)}>Done!</button>
+            <label htmlFor="contents">Can you list the items contained? e.g books, records</label>
+            <input name="contents" type="text" onChange={(e) => setUserTextInput(e.target.value)} />
+            <label id="drop" htmlFor="file">
+                <p>Drag & drop a photo here</p>
+                <p>or</p>
+                <input id="browse" type="file" name="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
+            </label>
+            <button onClick={() => userSubmitHandler()}>Done!</button>
         </UserInputStyles>
     );
 };

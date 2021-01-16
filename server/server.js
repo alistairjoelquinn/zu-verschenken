@@ -3,16 +3,16 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 
-const { getInitialLocations } = require('./database/queries');
+const { getInitialLocations, insertNewLocation } = require('./database/queries');
 
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post('/new-location-click', (req, res) => {
-    userInputLocations.push(req.body);
-    res.json({ userInputLocations });
+app.post('/new-location-click', async (req, res) => {
+    const { rows } = await insertNewLocation();
+    console.log('rows: ', rows);
 });
 
 app.get('/initial-user-locations', async (req, res) => {
