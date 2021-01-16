@@ -11,7 +11,7 @@ const { getInitialLocations, insertNewLocation } = require('./database/queries')
 
 app.use(compression());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post('/new-location-click', uploader.single('image'), s3.upload, async (req, res) => {

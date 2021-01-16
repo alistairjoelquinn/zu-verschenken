@@ -11,6 +11,7 @@ import MapReset from './MapReset';
 const Map = ({ onMapLoad, relocateMap, setClearSearchBar, setShowModal, setUserCoords }) => {
     const dispatch = useDispatch();
     const giftMarkers = useSelector(state => state.userLocations);
+    console.log('giftMarkers: ', giftMarkers);
     const [selectedGift, setSelectedGift] = useState(null);
 
     const [directionsRequested, setDirectionsRequested] = useState(false);

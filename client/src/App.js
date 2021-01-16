@@ -63,9 +63,8 @@ const App = () => {
         fd.append('lng', userCoords.lng);
         fd.append('date', userCoords.time);
         try {
-            const response = await axios.post('/new-location-click', fd);
-            console.log('response after submitting new location: ', response);
-            // dispatch(updateUserLocations(response));
+            const { data } = await axios.post('/new-location-click', fd);
+            dispatch(updateUserLocations(data));
         } catch (err) {
             console.log('err: ', err);
         }

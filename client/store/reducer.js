@@ -12,7 +12,10 @@ export default (state = initialState, action) => {
     if (action.type === "UPDATE_USER_LOCATIONS") {
         return {
             ...state,
-            userLocations: action.newLocations
+            userLocations: [
+                ...state.userLocations,
+                action.newLocations
+            ]
         };
     }
     return state;
