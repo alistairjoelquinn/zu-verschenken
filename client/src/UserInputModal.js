@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const UserInputStyles = styled.div`
@@ -40,15 +41,17 @@ const UserInputStyles = styled.div`
 `;
 
 const UserInputModal = ({ setShowModal, setFile, setUserTextInput, submitNewLocationToServer }) => {
+    const [boxContents, setboxContents] = useState('');
+
     const userSubmitHandler = () => {
         setShowModal(false);
-        submitNewLocationToServer();
+        submitNewLocationToServer(boxContents);
     };
 
     return (
         <UserInputStyles>
             <label htmlFor="contents">Can you list the items contained? e.g books, records</label>
-            <input name="contents" type="text" onChange={(e) => setUserTextInput(e.target.value)} />
+            <input name="contents" type="text" onChange={(e) => setboxContents(e.target.value)} />
             <label id="drop" htmlFor="file">
                 <p>Drag & drop a photo here</p>
                 <p>or</p>

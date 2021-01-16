@@ -15,10 +15,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post('/new-location-click', uploader.single('image'), async (req, res) => {
-    // const imageUrl = `${s3Url}${req.file.filename}`;
-    console.log('req.file.filename: ', req.file.filename);
-    // console.log('imageUrl: ', imageUrl);
-    console.log('req.body: ', req.body);
+    const imageUrl = `${s3Url}${req.file.filename}`;
+    console.log('imageUrl: ', imageUrl);
+    console.log('req.body.userTextInput: ', req.body.userTextInput);
+    console.log('req.body.userCoords: ', req.body.userCoords);
     // const { rows } = await insertNewLocation();
     // console.log('rows: ', rows);
 });

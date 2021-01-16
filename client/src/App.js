@@ -47,7 +47,6 @@ const App = () => {
     const [showModal, setShowModal] = useState(false);
 
     const [file, setFile] = useState(null);
-    const [userTextInput, setUserTextInput] = useState('');
     const [userCoords, setUserCoords] = useState(null);
 
     const { isLoaded } = useLoadScript({
@@ -55,17 +54,19 @@ const App = () => {
         libraries: config.libraries
     });
 
-    const submitNewLocationToServer = useCallback(async () => {
+    const submitNewLocationToServer = useCallback(async (userTextInput) => {
+        var fd = new FormData;
+        fd.append('image', file);
+        fd.append('userTextInput', userTextInput);
+        fd.append('userCoords', userCoords);
         try {
-            const response = await axios.post('/new-location-click', {
-                file, userTextInput, ...userCoords
-            });
+            const response = await axios.post('/new-location-click', fd);
             console.log('response after submitting new location: ', response);
             // dispatch(updateUserLocations(response));
         } catch (err) {
             console.log('err: ', err);
         }
-    }, [file, userTextInput, userCoords]);
+    }, [file, userCoords]);
 
     const mapRef = useRef();
     const assignMapToRef = useCallback(map => mapRef.current = map, []);
@@ -107,7 +108,6 @@ const App = () => {
                     <UserInputModal
                         setShowModal={setShowModal}
                         setFile={setFile}
-                        setUserTextInput={setUserTextInput}
                         submitNewLocationToServer={submitNewLocationToServer}
                     />
                 }
