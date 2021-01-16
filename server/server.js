@@ -3,6 +3,10 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 
+const { s3Url } = require('../awsconfig');
+const { uploader } = require('./aws/upload');
+const s3 = require('./aws/s3');
+
 const { getInitialLocations, insertNewLocation } = require('./database/queries');
 
 app.use(compression());
@@ -10,9 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post('/new-location-click', async (req, res) => {
-    const { rows } = await insertNewLocation();
-    console.log('rows: ', rows);
+app.post('/new-location-click', uploader.single('image'), async (req, res) => {
+    // const imageUrl = `${s3Url}${req.file.filename}`;
+    console.log('req.file.filename: ', req.file.filename);
+    // console.log('imageUrl: ', imageUrl);
+    console.log('req.body: ', req.body);
+    // const { rows } = await insertNewLocation();
+    // console.log('rows: ', rows);
 });
 
 app.get('/initial-user-locations', async (req, res) => {

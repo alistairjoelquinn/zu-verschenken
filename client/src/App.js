@@ -65,7 +65,7 @@ const App = () => {
         } catch (err) {
             console.log('err: ', err);
         }
-    }, []);
+    }, [file, userTextInput, userCoords]);
 
     const mapRef = useRef();
     const assignMapToRef = useCallback(map => mapRef.current = map, []);
