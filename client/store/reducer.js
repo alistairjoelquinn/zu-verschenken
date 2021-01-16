@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
             ...state,
             userLocations: [
                 ...state.userLocations,
-                action.newLocations
+                action.newLocation
             ]
         };
     }

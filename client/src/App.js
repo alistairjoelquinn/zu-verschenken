@@ -55,7 +55,6 @@ const App = () => {
     });
 
     const submitNewLocationToServer = useCallback(async (userTextInput) => {
-        console.log('userCoords: ', userCoords);
         var fd = new FormData;
         fd.append('image', file);
         fd.append('userTextInput', userTextInput);
