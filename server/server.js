@@ -11,16 +11,19 @@ const { getInitialLocations, insertNewLocation } = require('./database/queries')
 
 app.use(compression());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post('/new-location-click', uploader.single('image'), async (req, res) => {
+app.post('/new-location-click', uploader.single('image'), s3.upload, async (req, res) => {
     const imageUrl = `${s3Url}${req.file.filename}`;
-    console.log('imageUrl: ', imageUrl);
-    console.log('req.body.userTextInput: ', req.body.userTextInput);
-    console.log('req.body.userCoords: ', req.body.userCoords);
-    // const { rows } = await insertNewLocation();
-    // console.log('rows: ', rows);
+    const { rows } = await insertNewLocation(
+        req.body.lat,
+        req.body.lng,
+        req.body.date,
+        imageUrl,
+        req.body.userTextInput
+    );
+    res.json(rows[0]);
 });
 
 app.get('/initial-user-locations', async (req, res) => {

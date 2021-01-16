@@ -55,10 +55,13 @@ const App = () => {
     });
 
     const submitNewLocationToServer = useCallback(async (userTextInput) => {
+        console.log('userCoords: ', userCoords);
         var fd = new FormData;
         fd.append('image', file);
         fd.append('userTextInput', userTextInput);
-        fd.append('userCoords', userCoords);
+        fd.append('lat', userCoords.lat);
+        fd.append('lng', userCoords.lng);
+        fd.append('date', userCoords.time);
         try {
             const response = await axios.post('/new-location-click', fd);
             console.log('response after submitting new location: ', response);
