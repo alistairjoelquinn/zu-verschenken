@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post('/new-location-click', uploader.single('image'), s3.upload, async (req, res) => {
-    const imageUrl = `${s3Url}${req.file.filename}`;
+    const imageUrl = `${s3Url}${req.body.imageName}`;
     const { rows } = await insertNewLocation(
         req.body.lat,
         req.body.lng,

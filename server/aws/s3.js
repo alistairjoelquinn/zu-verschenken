@@ -1,5 +1,5 @@
 const aws = require('aws-sdk');
-const fs = require('fs');
+const { v4 } = require('uuid');
 
 let secrets;
 if (process.env.NODE_ENV == 'production') {
@@ -14,24 +14,24 @@ const s3 = new aws.S3({
 });
 
 module.exports.upload = (req, res, next) => {
-    console.log('req.file: ', req.file);
     if (!req.file) {
         res.sendStatus(500);
         return;
     }
-    const { filename, mimetype, size, buffer } = req.file;
+    const { mimetype, size, buffer } = req.file;
+    const extension = mimetype.split('/')[1];
+    req.body.imageName = `${v4()}.${extension}`;
     s3
         .putObject({
             Bucket: 'alsimageuniverse',
             ACL: 'public-read',
-            Key: filename,
-            Body: fs.createReadStream(buffer),
+            Key: req.body.imageName,
+            Body: buffer,
             ContentType: mimetype,
             ContentLength: size
         })
         .promise()
-        .then(response => {
-            console.log("upload to bucket was successful: ", response);
+        .then(() => {
             next();
         })
         .catch(err => {
