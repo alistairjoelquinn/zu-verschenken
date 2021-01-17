@@ -1,21 +1,15 @@
 const multer = require('multer');
-const uidSafe = require('uid-safe');
-const path = require('path');
 
-const diskStorage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, __dirname + '/uploads');
-    },
-    filename: function (req, file, callback) {
-        uidSafe(24).then(function (uid) {
-            callback(null, uid + path.extname(file.originalname));
-        });
+const multerOptions = {
+    storage: multer.memoryStorage(),
+    fileFilter(req, file, next) {
+        const isImage = file.mimetype.startsWith('image/');
+        if (isImage) {
+            next(null, true);
+        } else {
+            next({ message: 'File type not supported' }, false);
+        }
     }
-});
+};
 
-module.exports.uploader = multer({
-    storage: diskStorage,
-    limits: {
-        fileSize: 3097152
-    }
-});
+module.exports.uploader = multer(multerOptions);

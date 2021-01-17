@@ -14,27 +14,28 @@ const s3 = new aws.S3({
 });
 
 module.exports.upload = (req, res, next) => {
+    console.log('req.file: ', req.file);
     if (!req.file) {
         res.sendStatus(500);
         return;
     }
-    const { filename, mimetype, size, path } = req.file;
-    s3.putObject({
-        Bucket: 'alsimageuniverse',
-        ACL: 'public-read',
-        Key: filename,
-        Body: fs.createReadStream(path),
-        ContentType: mimetype,
-        ContentLength: size
-    }).promise().then(
-        () => {
-            console.log("upload to bucket was successful");
+    const { filename, mimetype, size, buffer } = req.file;
+    s3
+        .putObject({
+            Bucket: 'alsimageuniverse',
+            ACL: 'public-read',
+            Key: filename,
+            Body: fs.createReadStream(buffer),
+            ContentType: mimetype,
+            ContentLength: size
+        })
+        .promise()
+        .then(response => {
+            console.log("upload to bucket was successful: ", response);
             next();
-        }
-    ).catch(
-        err => {
+        })
+        .catch(err => {
             console.log("upload to AWS bucket was unsuccessful", err);
             res.sendStatus(500);
-        }
-    );
+        });
 };
