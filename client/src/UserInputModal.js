@@ -40,7 +40,7 @@ const UserInputStyles = styled.div`
     }
 `;
 
-const UserInputModal = ({ setShowModal, setFile, setUserTextInput, submitNewLocationToServer }) => {
+const UserInputModal = ({ setShowModal, setFile, file, submitNewLocationToServer }) => {
     const [boxContents, setboxContents] = useState('');
 
     const userSubmitHandler = () => {
@@ -56,6 +56,7 @@ const UserInputModal = ({ setShowModal, setFile, setUserTextInput, submitNewLoca
                 <p>Drag & drop a photo here</p>
                 <p>or</p>
                 <input id="browse" type="file" name="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
+                {file && <p>{file.name} selected</p>}
             </label>
             <button onClick={() => userSubmitHandler()}>Done!</button>
         </UserInputStyles>

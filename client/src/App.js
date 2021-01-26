@@ -109,6 +109,7 @@ const App = () => {
                     <UserInputModal
                         setShowModal={setShowModal}
                         setFile={setFile}
+                        file={file}
                         submitNewLocationToServer={submitNewLocationToServer}
                     />
                 }
