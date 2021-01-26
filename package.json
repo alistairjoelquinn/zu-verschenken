@@ -56,5 +56,8 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "babel-plugin-styled-components": "^1.12.0"
+    }
 }
