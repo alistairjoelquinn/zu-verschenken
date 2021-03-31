@@ -70,7 +70,9 @@ const App = () => {
     }, [file, userCoords]);
 
     const mapRef = useRef();
-    const assignMapToRef = useCallback(map => mapRef.current = map, []);
+    const mapped = useCallback((map) => {
+        mapRef.current = map;
+    }, []);
 
     const relocateMap = useCallback(({ lat, lng }, zoom = 16) => {
         mapRef.current.panTo({ lat, lng });
@@ -98,7 +100,7 @@ const App = () => {
                     />
                     <UserLocation relocateMap={relocateMap} />
                     <Map
-                        onMapLoad={assignMapToRef}
+                        onMapLoad={mapped}
                         relocateMap={relocateMap}
                         setClearSearchBar={setClearSearchBar}
                         setShowModal={setShowModal}
